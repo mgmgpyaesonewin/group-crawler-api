@@ -16,10 +16,7 @@ export class IndustriesService {
   }
 
   async getIndustry(industryId: string) {
-    const industry = await this.industryModel.findById(industryId).exec();
-    if (!industry) {
-      throw new NotFoundException('Could not find industry');
-    }
+    const industry = await this.findIndustry(industryId);
     return {
       id: industry.id,
       name: industry.name,
@@ -32,5 +29,26 @@ export class IndustriesService {
     });
     const result = await newIndustry.save();
     return result.id as string;
+  }
+
+  async updateIndustry(industryId: string, name: string) {
+    const updateIndustry = await this.findIndustry(industryId);
+    if (name) {
+      updateIndustry.name = name;
+    }
+    updateIndustry.save();
+  }
+
+  private async findIndustry(industryId: string): Promise<IndustryDocument> {
+    let industry;
+    try {
+      industry = await this.industryModel.findById(industryId).exec();
+    } catch (error) {
+      throw new NotFoundException('Could not find industry');
+    }
+    if (!industry) {
+      throw new NotFoundException('Could not find industry');
+    }
+    return industry;
   }
 }

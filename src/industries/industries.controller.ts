@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
 
 import { IndustriesService } from './industries.service';
 
@@ -22,6 +22,14 @@ export class IndustriesController {
     const generatedId = await this.industriesService.saveIndustry(name);
     return {
       id: generatedId,
+    };
+  }
+
+  @Patch(':id')
+  async updateIndustry(@Param('id') id: string, @Body('name') name: string) {
+    await this.industriesService.updateIndustry(id, name);
+    return {
+      message: 'Updated Successfully',
     };
   }
 }
