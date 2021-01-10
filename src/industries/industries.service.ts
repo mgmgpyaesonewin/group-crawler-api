@@ -10,6 +10,11 @@ export class IndustriesService {
     @InjectModel('Industry')
     private readonly industryModel: Model<IndustryDocument>,
   ) {}
+  async getIndustries() {
+    const industries = await this.industryModel.find().exec();
+    return industries;
+  }
+
   async saveIndustry(name: string) {
     const newIndustry = new this.industryModel({
       name,
