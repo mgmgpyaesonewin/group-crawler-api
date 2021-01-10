@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
+import { runInThisContext } from 'vm';
 
 import { IndustriesService } from './industries.service';
 
@@ -30,6 +31,14 @@ export class IndustriesController {
     await this.industriesService.updateIndustry(id, name);
     return {
       message: 'Updated Successfully',
+    };
+  }
+
+  @Delete(':id')
+  async deleteIndustry(@Param('id') industryId: string) {
+    await this.industriesService.deleteIndustry(industryId);
+    return {
+      message: 'Delete Successfully',
     };
   }
 }

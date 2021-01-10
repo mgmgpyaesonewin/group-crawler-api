@@ -39,6 +39,10 @@ export class IndustriesService {
     updateIndustry.save();
   }
 
+  async deleteIndustry(industryId: string) {
+    await this.industryModel.deleteOne({ _id: industryId }).exec();
+  }
+
   private async findIndustry(industryId: string): Promise<IndustryDocument> {
     let industry;
     try {
