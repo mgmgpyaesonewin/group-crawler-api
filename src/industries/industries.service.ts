@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -13,6 +13,17 @@ export class IndustriesService {
   async getIndustries() {
     const industries = await this.industryModel.find().exec();
     return industries;
+  }
+
+  async getIndustry(industryId: string) {
+    const industry = await this.industryModel.findById(industryId).exec();
+    if (!industry) {
+      throw new NotFoundException('Could not find industry');
+    }
+    return {
+      id: industry.id,
+      name: industry.name,
+    };
   }
 
   async saveIndustry(name: string) {

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 
 import { IndustriesService } from './industries.service';
 
@@ -10,6 +10,11 @@ export class IndustriesController {
   async getIndustries() {
     const industries = await this.industriesService.getIndustries();
     return industries;
+  }
+
+  @Get(':id')
+  getIndustry(@Param('id') industryId: string) {
+    return this.industriesService.getIndustry(industryId);
   }
 
   @Post()
