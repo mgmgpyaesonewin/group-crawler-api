@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 import { UserDocument } from './users.schema';
 
@@ -24,9 +25,10 @@ export class UsersService {
   }
 
   async saveUser(username: string, password: string) {
+    const hashedPassword = await this.hashPassword(password);
     const newUser = new this.userModel({
       username,
-      password,
+      password: hashedPassword,
     });
     const result = await newUser.save();
     return result.id as string;
@@ -38,7 +40,8 @@ export class UsersService {
       updateUser.username = username;
     }
     if (password) {
-      updateUser.password = password;
+      const hashedPassword = await this.hashPassword(password);
+      updateUser.password = hashedPassword;
     }
     updateUser.save();
   }
@@ -58,5 +61,9 @@ export class UsersService {
       throw new NotFoundException('Could not find industry');
     }
     return industry;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 2);
   }
 }
