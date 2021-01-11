@@ -1,5 +1,12 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
-import { runInThisContext } from 'vm';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 
 import { IndustriesService } from './industries.service';
 
