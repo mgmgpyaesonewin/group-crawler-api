@@ -24,6 +24,15 @@ export class UsersService {
     };
   }
 
+  async getUserByName(username: string) {
+    const user = await this.userModel.findOne({ username: username }).exec();
+    return {
+      id: user.id,
+      username: user.username,
+      password: user.password,
+    };
+  }
+
   async saveUser(username: string, password: string) {
     const hashedPassword = await this.hashPassword(password);
     const newUser = new this.userModel({
@@ -51,16 +60,16 @@ export class UsersService {
   }
 
   private async findUser(userId: string): Promise<UserDocument> {
-    let industry;
+    let user;
     try {
-      industry = await this.userModel.findById(userId).exec();
+      user = await this.userModel.findById(userId).exec();
     } catch (error) {
-      throw new NotFoundException('Could not find industry');
+      throw new NotFoundException('Could not find user');
     }
-    if (!industry) {
-      throw new NotFoundException('Could not find industry');
+    if (!user) {
+      throw new NotFoundException('Could not find user');
     }
-    return industry;
+    return user;
   }
 
   private async hashPassword(password: string): Promise<string> {
