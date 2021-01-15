@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { IndustriesModule } from './industries/industries.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UsersModule } from './users/users.module';
     MongooseModule.forRoot('mongodb://localhost/bindez'),
     AuthModule,
     UsersModule,
+    GroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
