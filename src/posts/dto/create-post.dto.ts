@@ -6,5 +6,11 @@ export class CreatePostDto {
   group: string;
   type: string;
   text: string;
-  attachments: Array<string>;
+  attachments: [string];
+  comments: [
+    {
+      name: string;
+      text: string;
+    },
+  ];
 }
