@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose'; // Types
+import { Model, Types } from 'mongoose'; // Types
 
 import { GroupDocument } from './groups.schema';
 
@@ -19,6 +19,21 @@ export class GroupsService {
         as: 'industry',
       })
       .exec();
+    return groups;
+  }
+
+  async getGroupsByIndustryId(industry_id: string) {
+    const groups = await this.groupModel
+      .aggregate()
+      .match({ industry_id: Types.ObjectId(industry_id) })
+      .lookup({
+        from: 'industries',
+        localField: 'industry_id',
+        foreignField: '_id',
+        as: 'industry',
+      })
+      .exec();
+
     return groups;
   }
 

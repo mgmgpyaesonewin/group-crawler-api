@@ -6,6 +6,7 @@ import {
   Post,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 
@@ -14,7 +15,11 @@ export class GroupsController {
   constructor(private readonly groupService: GroupsService) {}
 
   @Get()
-  async getGroups() {
+  async getGroups(@Query('industry_id') industryId: string) {
+    if (industryId) {
+      const groups = await this.groupService.getGroupsByIndustryId(industryId);
+      return groups;
+    }
     const groups = await this.groupService.getGroups();
     return groups;
   }

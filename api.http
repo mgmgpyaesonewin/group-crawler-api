@@ -19,6 +19,9 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:3000/groups?industry_id=6001993b9bbd588ead5ba0c8
+
+###
 GET http://localhost:3000/industries
 
 ###
