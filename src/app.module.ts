@@ -6,6 +6,7 @@ import { IndustriesModule } from './industries/industries.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GroupsModule } from './groups/groups.module';
     AuthModule,
     UsersModule,
     GroupsModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
