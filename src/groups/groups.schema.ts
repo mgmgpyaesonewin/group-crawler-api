@@ -14,6 +14,9 @@ export class Group {
   @Prop({ default: 'https://dummyimage.com/600x400/000/fff&text=Image' })
   picture_url: string;
 
+  @Prop({ type: SchemaTypes.Boolean, default: true })
+  is_public: boolean;
+
   @Prop({ type: SchemaTypes.ObjectId, required: true })
   industry_id: string;
 }
