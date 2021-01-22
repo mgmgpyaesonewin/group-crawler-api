@@ -28,7 +28,7 @@ export class PostsService {
     return `This action updates a #${id} post`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: string) {
+    await this.postModel.deleteOne({ _id: id }).exec();
   }
 }
