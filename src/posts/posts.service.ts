@@ -17,7 +17,15 @@ export class PostsService {
   }
 
   async findAll() {
-    return await this.postModel.find().exec();
+    return await this.postModel
+      .aggregate()
+      .lookup({
+        from: 'groups',
+        localField: 'group_id',
+        foreignField: '_id',
+        as: 'groups',
+      })
+      .exec();
   }
 
   async findOne(id: string) {
@@ -41,8 +49,8 @@ export class PostsService {
     if (updatePostDto.type) {
       post.type = updatePostDto.type;
     }
-    if (updatePostDto.group) {
-      post.group = updatePostDto.group;
+    if (updatePostDto.group_id) {
+      post.group_id = updatePostDto.group_id;
     }
     if (updatePostDto.date) {
       post.date = updatePostDto.date;

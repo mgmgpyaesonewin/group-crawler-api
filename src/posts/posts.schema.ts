@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 export type PostDocument = Post & Document;
 
@@ -17,8 +17,8 @@ export class Post {
   @Prop()
   date: Date;
 
-  @Prop()
-  group: string;
+  @Prop({ type: SchemaTypes.ObjectId, required: true })
+  group_id: string;
 
   @Prop()
   type: string;

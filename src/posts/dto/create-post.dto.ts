@@ -3,7 +3,7 @@ export class CreatePostDto {
   profile_link: string;
   link: string;
   date: Date;
-  group: string;
+  group_id: string;
   type: string;
   text: string;
   attachments: [string];
