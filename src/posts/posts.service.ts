@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -20,12 +20,49 @@ export class PostsService {
     return await this.postModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: string) {
+    let post;
+    try {
+      post = await this.postModel.findById(id).exec();
+    } catch (error) {
+      throw new NotFoundException('Could not find post');
+    }
+    if (!post) {
+      throw new NotFoundException('Could not find post');
+    }
+    return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: string, updatePostDto: UpdatePostDto) {
+    const post = await this.postModel.findById(id).exec();
+    if (updatePostDto.text) {
+      post.text = updatePostDto.text;
+    }
+    if (updatePostDto.type) {
+      post.type = updatePostDto.type;
+    }
+    if (updatePostDto.group) {
+      post.group = updatePostDto.group;
+    }
+    if (updatePostDto.date) {
+      post.date = updatePostDto.date;
+    }
+    if (updatePostDto.link) {
+      post.link = updatePostDto.link;
+    }
+    if (updatePostDto.profile_link) {
+      post.profile_link = updatePostDto.profile_link;
+    }
+    if (updatePostDto.profile_name) {
+      post.profile_name = updatePostDto.profile_name;
+    }
+    if (updatePostDto.attachments) {
+      post.attachments = updatePostDto.attachments;
+    }
+    if (updatePostDto.comments) {
+      post.comments = updatePostDto.comments;
+    }
+    post.save();
   }
 
   async remove(id: string) {

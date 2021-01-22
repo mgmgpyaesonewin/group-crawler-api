@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Put,
+  Patch,
   Param,
   Delete,
 } from '@nestjs/common';
@@ -30,12 +30,15 @@ export class PostsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+    return this.postsService.findOne(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    await this.postsService.update(id, updatePostDto);
+    return {
+      message: 'Updated Successfully',
+    };
   }
 
   @Delete(':id')
