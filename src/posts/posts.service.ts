@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostDocument } from './posts.schema';
@@ -25,6 +25,11 @@ export class PostsService {
         foreignField: '_id',
         as: 'groups',
       })
+      // .project({
+      //   _id: { $gt: Types.ObjectId('600aa164a52f5f7b43284839') },
+      // })
+      .sort({ date: -1, _id: 1 })
+      .limit(30)
       .exec();
   }
 

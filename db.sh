@@ -1,0 +1,2 @@
+scp ubuntu@52.148.79.239:backup/dump_23-01-2021.gz /Users/pyaesone/Documents/codes/bindez-projects/group-crawler-api/database
+docker-compose exec mongo mongorestore --archive=/home/database/dump_23-01-2021.gz --gzip

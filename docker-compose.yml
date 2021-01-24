@@ -1,9 +1,31 @@
-version: "3.8"
+version: '3.8'
 
-services: 
+networks:
+  crawler:
+    name: crawler
+
+services:
   mongo:
     image: mongo:latest
-    ports: 
+    ports:
       - 27017:27017
-    volumes: 
+    volumes:
       - ./mongodb:/var/lib/mongodb
+      - ./database:/home/database
+    networks:
+      - crawler
+
+  postgres:
+    image: postgres:latest
+    depends_on:
+      - mongo
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: psqladmin
+      POSTGRES_PASSWORD: QmluZGV6UG9zdGdyZXNxbEdyb3Vw
+      POSTGRES_DB: bindez
+    networks:
+      - crawler
